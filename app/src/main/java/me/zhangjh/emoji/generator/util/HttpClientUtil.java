@@ -1,4 +1,4 @@
-package me.zhangjh.emoji.emoji.generator.util;
+package me.zhangjh.emoji.generator.util;
 
 import android.util.Log;
 
@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-import me.zhangjh.emoji.emoji.generator.entity.HttpRequest;
+import me.zhangjh.emoji.generator.entity.HttpRequest;
 import okhttp3.ConnectionPool;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;

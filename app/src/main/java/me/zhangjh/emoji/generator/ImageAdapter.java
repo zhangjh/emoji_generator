@@ -1,6 +1,8 @@
-package me.zhangjh.emoji.emoji.generator;
+package me.zhangjh.emoji.generator;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -15,7 +18,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.zhangjh.emoji.emoji.generator.entity.ImgItem;
+import me.zhangjh.emoji.generator.entity.ImgItem;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
 
@@ -42,7 +45,15 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
         String url = imageList.get(position).getUrl();
-        Glide.with(context).load(url).into(holder.imageView);
+        if(url.startsWith("http")) {
+            Glide.with(context).load(url).into(holder.imageView);
+        } else {
+            int resourceId = Integer.parseInt(url);
+            Drawable drawable = ContextCompat.getDrawable(context, resourceId);
+            if(drawable instanceof BitmapDrawable) {
+                holder.imageView.setImageBitmap(((BitmapDrawable)drawable).getBitmap());
+            }
+        }
         holder.textView.setText(imageList.get(position).getDesc());
     }
 

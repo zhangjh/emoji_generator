@@ -1,4 +1,4 @@
-package me.zhangjh.emoji.emoji.generator.entity;
+package me.zhangjh.emoji.generator.entity;
 
 public class Response<T> {
 

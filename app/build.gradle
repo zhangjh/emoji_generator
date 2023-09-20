@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    namespace 'me.zhangjh.emoji.emoji.generator'
-    compileSdk 33
+    namespace 'me.zhangjh.emoji.generator'
+    compileSdk 34
 
     defaultConfig {
-        applicationId "me.zhangjh.emoji.emoji.generator"
+        applicationId "me.zhangjh.emoji.generator"
         minSdk 26
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
         resConfigs "en", "zh"

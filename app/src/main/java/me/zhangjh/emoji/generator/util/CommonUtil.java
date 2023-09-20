@@ -1,4 +1,4 @@
-package me.zhangjh.emoji.emoji.generator.util;
+package me.zhangjh.emoji.generator.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,4 +1,4 @@
-package me.zhangjh.emoji.emoji.generator;
+package me.zhangjh.emoji.generator;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -24,14 +24,14 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import me.zhangjh.emoji.emoji.generator.constant.BizConstant;
-import me.zhangjh.emoji.emoji.generator.entity.EmojiDrawResponse;
-import me.zhangjh.emoji.emoji.generator.entity.EmojiDrawSubmitted;
-import me.zhangjh.emoji.emoji.generator.entity.HttpRequest;
-import me.zhangjh.emoji.emoji.generator.entity.OperationUrl;
-import me.zhangjh.emoji.emoji.generator.entity.Response;
-import me.zhangjh.emoji.emoji.generator.util.CommonUtil;
-import me.zhangjh.emoji.emoji.generator.util.HttpClientUtil;
+import me.zhangjh.emoji.generator.constant.BizConstant;
+import me.zhangjh.emoji.generator.entity.EmojiDrawResponse;
+import me.zhangjh.emoji.generator.entity.EmojiDrawSubmitted;
+import me.zhangjh.emoji.generator.entity.HttpRequest;
+import me.zhangjh.emoji.generator.entity.OperationUrl;
+import me.zhangjh.emoji.generator.entity.Response;
+import me.zhangjh.emoji.generator.util.CommonUtil;
+import me.zhangjh.emoji.generator.util.HttpClientUtil;
 
 @SuppressLint("StaticFieldLeak")
 public class NetworkRequestTask extends AsyncTask<String, Void, String> {

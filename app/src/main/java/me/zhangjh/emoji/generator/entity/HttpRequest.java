@@ -1,4 +1,4 @@
-package me.zhangjh.emoji.emoji.generator.entity;
+package me.zhangjh.emoji.generator.entity;
 
 import androidx.annotation.NonNull;
 

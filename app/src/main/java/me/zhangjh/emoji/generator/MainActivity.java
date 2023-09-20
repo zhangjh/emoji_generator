@@ -1,4 +1,4 @@
-package me.zhangjh.emoji.emoji.generator;
+package me.zhangjh.emoji.generator;
 
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -34,13 +34,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import me.zhangjh.emoji.emoji.generator.entity.ImgItem;
+import me.zhangjh.emoji.generator.entity.ImgItem;
 
 public class MainActivity extends AppCompatActivity {
 
     private LoadingDialog loadingDialog;
 
-    private static Map<String, String> IMG_ITEMS = new HashMap<>();
+    private static final Map<Integer, String> IMG_ITEMS = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +50,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sampleDataInit() {
-        IMG_ITEMS.put("https://replicate.delivery/pbxt/J6vOuC0Yj647JRa9YAUMq1vbGKFAiOreQcKuJmHLI0wQuawIA/out-0.png",
+        IMG_ITEMS.put(R.drawable.tiger,
                 getString(R.string.sample_emoji_tiger));
-        IMG_ITEMS.put("https://replicate.delivery/pbxt/a3z81v5vwlKfLq1H5uBqpVmkHalOVup0jSLma9E2UaF3tawIA/out-0.png",
-                getString(R.string.sample_emoji_man));
-        IMG_ITEMS.put("https://replicate.delivery/pbxt/cNFerMxyBD1UfERJB29hHCGJujf0DShhcDWcaqxlX9aUfVDGB/out-0.png",
+        IMG_ITEMS.put(R.drawable.llama,
                 getString(R.string.sample_emoji_llama));
-        IMG_ITEMS.put("https://replicate.delivery/pbxt/DKFghOgmkTKVCpwgfIeKkTqMemHQMKtW9yxLYqeLyeonHtGMC/out-0.png",
+        IMG_ITEMS.put(R.drawable.man,
+                getString(R.string.sample_emoji_man));
+        IMG_ITEMS.put(R.drawable.camera,
                 getString(R.string.sample_emoji_camera));
     }
 
@@ -68,10 +68,10 @@ public class MainActivity extends AppCompatActivity {
         ImageAdapter adapter = new ImageAdapter(this.getApplicationContext());
         List<ImgItem> sampleItems = new ArrayList<>();
 
-        for (Map.Entry<String, String> entry : IMG_ITEMS.entrySet()) {
-            String url = entry.getKey();
+        for (Map.Entry<Integer, String> entry : IMG_ITEMS.entrySet()) {
+            Integer imgId = entry.getKey();
             String prompt = entry.getValue();
-            ImgItem imgItem = new ImgItem(url, prompt);
+            ImgItem imgItem = new ImgItem(imgId.toString(), prompt);
             sampleItems.add(imgItem);
         }
         adapter.setImageList(sampleItems);

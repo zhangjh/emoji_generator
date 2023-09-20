@@ -1,4 +1,4 @@
-package me.zhangjh.emoji.emoji.generator;
+package me.zhangjh.emoji.generator;
 
 import android.app.Dialog;
 import android.content.Context;

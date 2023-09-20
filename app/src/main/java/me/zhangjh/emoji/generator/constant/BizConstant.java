@@ -1,4 +1,4 @@
-package me.zhangjh.emoji.emoji.generator.constant;
+package me.zhangjh.emoji.generator.constant;
 
 public class BizConstant {
 

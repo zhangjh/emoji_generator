@@ -1,18 +1,16 @@
-package me.zhangjh.emoji.emoji.generator.entity;
+package me.zhangjh.emoji.generator.entity;
 
 import com.alibaba.fastjson2.annotation.JSONField;
 
 import java.util.Date;
 import java.util.List;
 
-public class EmojiDrawResponse {
+public class EmojiDrawSubmitted {
     private String id;
 
     private String version;
 
     private String logs;
-
-    private List<String> output;
 
     private String error;
 
@@ -20,12 +18,6 @@ public class EmojiDrawResponse {
 
     @JSONField(name = "created_at")
     private Date createdAt;
-
-    @JSONField(name = "started_at")
-    private Date startedAt;
-
-    @JSONField(name = "completed_at")
-    private Date completedAt;
 
     private List<OperationUrl> urls;
 
@@ -53,14 +45,6 @@ public class EmojiDrawResponse {
         this.logs = logs;
     }
 
-    public List<String> getOutput() {
-        return output;
-    }
-
-    public void setOutput(List<String> output) {
-        this.output = output;
-    }
-
     public String getError() {
         return error;
     }
@@ -83,22 +67,6 @@ public class EmojiDrawResponse {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public Date getStartedAt() {
-        return startedAt;
-    }
-
-    public void setStartedAt(Date startedAt) {
-        this.startedAt = startedAt;
-    }
-
-    public Date getCompletedAt() {
-        return completedAt;
-    }
-
-    public void setCompletedAt(Date completedAt) {
-        this.completedAt = completedAt;
     }
 
     public List<OperationUrl> getUrls() {

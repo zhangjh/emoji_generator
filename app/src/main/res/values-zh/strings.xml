@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Emoji头像</string>
+    <string name="query_hint">输入你感兴趣的提示词</string>
+    <string name="loading_text">生成中，请稍等…</string>
+    <string name="save_pic_pre">已保存:</string>
+    <string name="sample_emoji_man">一个老人</string>
+    <string name="sample_emoji_tiger">一个老虎脸, 白色背景</string>
+    <string name="sample_emoji_camera">一个白色背景的简单的照相机</string>
+    <string name="sample_emoji_llama">一个羊驼脸，白色背景</string>
+</resources>

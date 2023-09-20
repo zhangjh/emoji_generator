@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Emoji avatar</string>
+    <string name="query_hint">Enter the prompt you are interested</string>
+    <string name="loading_text">Generating, please wait…</string>
+    <string name="save_pic_pre">Saved:</string>
+    <string name="sample_emoji_man">A TOK emoji of a man</string>
+    <string name="sample_emoji_tiger">A TOK emoji of a tiger face, white background</string>
+    <string name="sample_emoji_camera">A TOK emoji of a simple camera on a white background</string>
+    <string name="sample_emoji_llama">A TOK emoji of a llama face, white background</string>
+</resources>

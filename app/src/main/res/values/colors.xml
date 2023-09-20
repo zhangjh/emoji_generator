@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 主题颜色 -->
+    <color name="colorPrimary">@color/pin_blue</color>
+    <!-- 状态栏颜色 -->
+    <color name="colorPrimaryDark">@color/pin_blue</color>
+    <!-- 强调颜色 -->
+    <color name="colorAccent">#FF9800</color>
+    <color name="white">#FFF</color>
+    <color name="black">#000</color>
+    <color name="gray">#eee</color>
+    <color name="pin_blue">#2b73af</color>
+    <color name="bg_splash">#2b72aa</color>
+</resources>

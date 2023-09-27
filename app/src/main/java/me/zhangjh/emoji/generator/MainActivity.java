@@ -1,6 +1,7 @@
 package me.zhangjh.emoji.generator;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -13,12 +14,12 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,6 +40,8 @@ import me.zhangjh.emoji.generator.entity.ImgItem;
 public class MainActivity extends AppCompatActivity {
 
     private LoadingDialog loadingDialog;
+
+    private Context context;
 
     private static final Map<Integer, String> IMG_ITEMS = new HashMap<>();
 
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
+        context = this;
         // 初始化样例容器的展示
         sampleDataInit();
         RecyclerView sampleView = findViewById(R.id.samples);
@@ -92,8 +96,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 searchView.clearFocus();
                 // 开始生成
-                loadingDialog.show();
-                new NetworkRequestTask(getApplicationContext(), imgView1,
+                runOnUiThread(() -> loadingDialog.show());
+                new NetworkRequestTask(context, imgView1,
                         searchView, sampleView, resultView, loadingDialog)
                         .execute(query);
                 return true;
@@ -121,29 +125,36 @@ public class MainActivity extends AppCompatActivity {
         });
         downloadBtn.setOnClickListener((v) -> {
             // todo: 付费
-            String url = imgView1.getTag().toString();
-            File directory = getApplicationContext().getDir("download", MODE_PRIVATE);
-            if(!directory.exists()) {
-                directory.mkdirs();
-            }
-            Glide.with(this).load(url).into(new SimpleTarget<Drawable>() {
-                @Override
-                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                    ContentResolver resolver = getApplicationContext().getContentResolver();
-                    try {
-                        Bitmap bitmap = ((BitmapDrawable) resource).getBitmap();
-                        File file = new File(directory, System.currentTimeMillis() + ".jpg");
-                        try (FileOutputStream fos = new FileOutputStream(file)) {
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                            fos.flush();
-                        }
-                        // 插入图片库
-                        MediaStore.Images.Media.insertImage(resolver, file.getAbsolutePath(), file.getName(), null);
-                        Toast.makeText(getApplicationContext(),  getString(R.string.save_pic_pre) + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+            runOnUiThread(() -> {
+                GooglePayService payService = new GooglePayService(this, (purchase) -> {
+                    System.out.println("purchase: " + purchase);
+                    String url = imgView1.getTag().toString();
+                    File directory = getApplicationContext().getDir("download", MODE_PRIVATE);
+                    if(!directory.exists()) {
+                        directory.mkdirs();
                     }
-                }
+                    Glide.with(this).load(url).into(new SimpleTarget<Drawable>() {
+                        @Override
+                        public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                            ContentResolver resolver = getApplicationContext().getContentResolver();
+                            try {
+                                Bitmap bitmap = ((BitmapDrawable) resource).getBitmap();
+                                File file = new File(directory, System.currentTimeMillis() + ".jpg");
+                                try (FileOutputStream fos = new FileOutputStream(file)) {
+                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                                    fos.flush();
+                                }
+                                // 插入图片库
+                                MediaStore.Images.Media.insertImage(resolver, file.getAbsolutePath(), file.getName(), null);
+                                Toast.makeText(getApplicationContext(),  getString(R.string.save_pic_pre) + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    });
+                    return null;
+                });
+                payService.getClient(getApplicationContext());
             });
         });
     }

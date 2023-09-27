@@ -8,4 +8,8 @@
     <string name="sample_emoji_tiger">一个老虎脸, 白色背景</string>
     <string name="sample_emoji_camera">一个白色背景的简单的照相机</string>
     <string name="sample_emoji_llama">一个羊驼脸，白色背景</string>
+    <string name="restriction_tip">调用已达上限，请稍等</string>
+    <string name="result_tip">你可以在付费下载前不断重试，直到生成满意的结果\n你可以点击分享按钮将生成的结果免费分享给其他人</string>
+    <string name="network_error">网络似乎有点问题？</string>
+
 </resources>

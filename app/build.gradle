@@ -10,15 +10,15 @@ android {
         applicationId "me.zhangjh.emoji.generator"
         minSdk 26
         targetSdk 34
-        versionCode 1
-        versionName "1.0"
+        versionCode 5
+        versionName "1.4"
         resConfigs "en", "zh"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -37,12 +37,15 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-    implementation 'com.github.bumptech.glide:glide:4.15.1'
-    annotationProcessor 'com.github.bumptech.glide:glide:4.15.1'
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+    annotationProcessor 'com.github.bumptech.glide:glide:4.16.0'
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
     implementation 'org.apache.commons:commons-lang3:3.13.0'
-    implementation 'com.alibaba:fastjson:2.0.37'
-    implementation 'org.apache.commons:commons-collections4:4.1'
+    implementation 'com.alibaba:fastjson:2.0.40'
+    implementation 'org.apache.commons:commons-collections4:4.4'
 
+    implementation "com.google.android.gms:play-services-wallet:19.2.1"
+    implementation "com.android.billingclient:billing:6.0.1"
+    implementation 'com.google.guava:guava:31.0.1-android'
 
 }

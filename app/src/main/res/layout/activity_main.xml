@@ -12,7 +12,7 @@
         android:orientation="vertical"
         android:layout_margin="20dp"
         >
-        <SearchView
+        <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -20,6 +20,7 @@
             android:queryBackground="@android:color/transparent"
             android:queryHint="@string/query_hint"
             android:submitBackground="@android:color/transparent"
+            android:focusedByDefault="false"
             />
 
         <LinearLayout
@@ -28,13 +29,13 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:visibility="gone"
+            android:gravity="center"
             >
             <ImageView
                 android:id="@+id/imgView1"
                 android:layout_width="180dp"
                 android:layout_height="180dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@color/cardview_light_background"
                 android:gravity="center"
@@ -54,7 +55,9 @@
                         android:layout_weight="1"
                         android:layout_marginStart="50dp"
                         android:background="#fafafa"
-                        android:src="@mipmap/share" />
+                        android:src="@mipmap/share"
+                        android:focusedByDefault="false"
+                        />
                     <ImageButton
                         android:id="@+id/downloadBtn"
                         android:layout_width="0dp"
@@ -62,8 +65,16 @@
                         android:layout_weight="1"
                         android:layout_marginEnd="50dp"
                         android:background="#fafafa"
-                        android:src="@mipmap/download" />
+                        android:src="@mipmap/download"
+                        android:focusedByDefault="false"
+                        />
                 </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/result_tip"
+                android:layout_margin="10dp"
+                />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

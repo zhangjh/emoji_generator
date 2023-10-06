@@ -10,4 +10,5 @@
     <string name="restriction_tip">Maximum limit reached, please wait</string>
     <string name="result_tip">You can free try until satisfactory result is generated. \nClick share button to share the picture for free.</string>
     <string name="network_error">Network might be error?</string>
+    <string name="query_product_failed">Get inapp product failed, did you login google play?</string>
 </resources>

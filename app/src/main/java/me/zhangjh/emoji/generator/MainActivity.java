@@ -27,6 +27,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -124,39 +126,45 @@ public class MainActivity extends AppCompatActivity {
             this.startActivity(shareIntent);
         });
         downloadBtn.setOnClickListener((v) -> {
+            String url = imgView1.getTag().toString();
+            if(StringUtils.isNotEmpty(url)) {
+                downloadPic(url);
+            }
             // todo: 付费
-            runOnUiThread(() -> {
-                GooglePayService payService = new GooglePayService(this, (purchase) -> {
-                    System.out.println("purchase: " + purchase);
-                    String url = imgView1.getTag().toString();
-                    File directory = getApplicationContext().getDir("download", MODE_PRIVATE);
-                    if(!directory.exists()) {
-                        directory.mkdirs();
-                    }
-                    Glide.with(this).load(url).into(new SimpleTarget<Drawable>() {
-                        @Override
-                        public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                            ContentResolver resolver = getApplicationContext().getContentResolver();
-                            try {
-                                Bitmap bitmap = ((BitmapDrawable) resource).getBitmap();
-                                File file = new File(directory, System.currentTimeMillis() + ".jpg");
-                                try (FileOutputStream fos = new FileOutputStream(file)) {
-                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                                    fos.flush();
-                                }
-                                // 插入图片库
-                                MediaStore.Images.Media.insertImage(resolver, file.getAbsolutePath(), file.getName(), null);
-                                Toast.makeText(getApplicationContext(),  getString(R.string.save_pic_pre) + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                    });
-                    return null;
-                });
-                payService.getClient(getApplicationContext());
-            });
+//            runOnUiThread(() -> {
+//                GooglePayService payService = new GooglePayService(this, (purchase) -> {
+//                    System.out.println("purchase: " + purchase);
+//                    downloadPic(url);
+//                    return null;
+//                });
+//                payService.getClient(getApplicationContext());
+//            });
         });
     }
 
+    private void downloadPic(String url) {
+        File directory = getApplicationContext().getDir("download", MODE_PRIVATE);
+        if(!directory.exists()) {
+            directory.mkdirs();
+        }
+        Glide.with(this).load(url).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                ContentResolver resolver = getApplicationContext().getContentResolver();
+                try {
+                    Bitmap bitmap = ((BitmapDrawable) resource).getBitmap();
+                    File file = new File(directory, System.currentTimeMillis() + ".jpg");
+                    try (FileOutputStream fos = new FileOutputStream(file)) {
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                        fos.flush();
+                    }
+                    // 插入图片库
+                    MediaStore.Images.Media.insertImage(resolver, file.getAbsolutePath(), file.getName(), null);
+                    Toast.makeText(getApplicationContext(),  getString(R.string.save_pic_pre) + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
 }

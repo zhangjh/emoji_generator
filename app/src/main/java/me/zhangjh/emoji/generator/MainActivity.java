@@ -1,38 +1,34 @@
 package me.zhangjh.emoji.generator;
 
-import android.content.ContentResolver;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
-
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +41,11 @@ public class MainActivity extends AppCompatActivity {
 
     private Context context;
 
+    private DownloadListener downloadListener;
+
     private static final Map<Integer, String> IMG_ITEMS = new HashMap<>();
+
+    private static final int REQUEST_PER_CODE = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
 //            runOnUiThread(() -> {
 //                GooglePayService payService = new GooglePayService(this, (purchase) -> {
 //                    System.out.println("purchase: " + purchase);
-//                    downloadPic(url);
+//                    doDownload(url);
 //                    return null;
 //                });
 //                payService.getClient(getApplicationContext());
@@ -143,28 +143,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void downloadPic(String url) {
-        File directory = getApplicationContext().getDir("download", MODE_PRIVATE);
-        if(!directory.exists()) {
-            directory.mkdirs();
-        }
-        Glide.with(this).load(url).into(new SimpleTarget<Drawable>() {
-            @Override
-            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                ContentResolver resolver = getApplicationContext().getContentResolver();
-                try {
-                    Bitmap bitmap = ((BitmapDrawable) resource).getBitmap();
-                    File file = new File(directory, System.currentTimeMillis() + ".jpg");
-                    try (FileOutputStream fos = new FileOutputStream(file)) {
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                        fos.flush();
-                    }
-                    // 插入图片库
-                    MediaStore.Images.Media.insertImage(resolver, file.getAbsolutePath(), file.getName(), null);
-                    Toast.makeText(getApplicationContext(),  getString(R.string.save_pic_pre) + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+        Log.d("dowloadPic", "url: " + url);
+        if(StringUtils.isNotEmpty(url)) {
+            downloadListener = new DownloadListener(this, url);
+            // 下载到download路径需要请求授权
+            if(ContextCompat.checkSelfPermission(this, READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                    || ContextCompat.checkSelfPermission(this, WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE}, REQUEST_PER_CODE);
+            } else {
+                downloadListener.doDownload();
             }
-        });
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == REQUEST_PER_CODE) {
+            if(Arrays.stream(grantResults).allMatch(item -> item == PackageManager.PERMISSION_GRANTED)) {
+                Log.d("获取授权", "存储权限已授权");
+                if(downloadListener != null) {
+                    downloadListener.doDownload();
+                }
+            } else {
+                // 授权失败
+                runOnUiThread(() -> {
+                    Toast.makeText(this, getString(R.string.auth_failed), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent();
+                    intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    intent.setData(Uri.fromParts("package", getPackageName(), null));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    runOnUiThread(() -> startActivity(intent));
+                });
+            }
+        }
     }
 }

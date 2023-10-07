@@ -12,7 +12,7 @@
         android:orientation="vertical"
         android:layout_margin="20dp"
         >
-        <androidx.appcompat.widget.SearchView
+        <SearchView
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -28,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:layout_marginTop="-60dp"
             android:visibility="gone"
             android:gravity="center"
             >
@@ -36,17 +37,17 @@
                 android:layout_width="180dp"
                 android:layout_height="180dp"
                 android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
                 android:background="@color/cardview_light_background"
                 android:gravity="center"
                 android:scaleType="centerCrop"
                 android:visibility="visible"
                 />
             <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal"
-                    android:gravity="start|end"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:gravity="start|end"
+                android:layout_marginTop="20dp"
                     >
                     <ImageButton
                         android:id="@+id/shareBtn"
@@ -57,6 +58,7 @@
                         android:background="#fafafa"
                         android:src="@mipmap/share"
                         android:focusedByDefault="false"
+                        android:layout_gravity="center"
                         />
                     <ImageButton
                         android:id="@+id/downloadBtn"
@@ -67,6 +69,7 @@
                         android:background="#fafafa"
                         android:src="@mipmap/download"
                         android:focusedByDefault="false"
+                        android:layout_gravity="center"
                         />
                 </LinearLayout>
             <TextView

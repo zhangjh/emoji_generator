@@ -10,9 +10,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.Toast;
 
-import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson2.JSONObject;
@@ -127,6 +127,7 @@ public class NetworkRequestTask extends AsyncTask<String, Void, String> {
         if (!response.getSuccess()) {
             ((Activity) context).runOnUiThread(() ->
                     Toast.makeText(context, context.getString(R.string.restriction_tip), Toast.LENGTH_SHORT).show());
+            timer.cancel();
             return null;
         }
         EmojiDrawSubmitted drawSubmitted = JSONObject.parseObject(JSONObject.toJSONString(response.getData()),

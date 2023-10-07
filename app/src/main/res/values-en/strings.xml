@@ -9,8 +9,10 @@
     <string name="sample_emoji_camera">A TOK emoji of a simple camera on a white background</string>
     <string name="sample_emoji_llama">A TOK emoji of a llama face, white background</string>
     <string name="restriction_tip">Maximum limit reached, please wait</string>
-    <string name="result_tip">You can free try until satisfactory result is generated. \nClick share button to share the picture for free.</string>
+    <string name="result_tip">You can try until satisfactory result is generated. \nClick share button to share the picture for free.</string>
     <string name="network_error">Network might be error?</string>
     <string name="query_product_failed">Get inapp product failed, did you login google play?</string>
+    <string name="auth_failed">Authorization Failed. Please Set Manually.</string>
+    <string name="empty_url">empty download url</string>
 
 </resources>

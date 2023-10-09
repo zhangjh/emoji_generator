@@ -128,6 +128,7 @@ public class NetworkRequestTask extends AsyncTask<String, Void, String> {
             ((Activity) context).runOnUiThread(() ->
                     Toast.makeText(context, context.getString(R.string.restriction_tip), Toast.LENGTH_SHORT).show());
             timer.cancel();
+            loadingDialog.dismiss();
             return null;
         }
         EmojiDrawSubmitted drawSubmitted = JSONObject.parseObject(JSONObject.toJSONString(response.getData()),

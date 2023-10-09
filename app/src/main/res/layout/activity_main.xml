@@ -83,10 +83,22 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/samples"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible"
+            android:layout_height="570dp"
             android:layout_marginTop="10dp"
-            />
+            android:visibility="visible" />
+
+        <!-- for test
+          ca-app-pub-3940256099942544/6300978111
+         -->
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-9562106186826042/4527566278"
+        >
+        </com.google.android.gms.ads.AdView>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

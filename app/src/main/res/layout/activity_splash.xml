@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_splash"
+    android:gravity="center|top"
+    android:orientation="vertical">
+
+  <TextView
+      android:id="@+id/timeTip"
+      android:layout_width="wrap_content"
+      android:layout_height="20dp"
+      android:layout_gravity="end"
+      android:gravity="top"
+      android:textColor="@color/colorAccent"
+      android:layout_margin="20dp"
+      />
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:layout_gravity="center"
+      android:gravity="center"
+      android:layout_marginTop="-20dp"
+      >
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginTop="-120dp"
+        android:contentDescription="开屏图片"
+        android:src="@mipmap/ic_launcher" />
+  </LinearLayout>
+
+
+</LinearLayout>
